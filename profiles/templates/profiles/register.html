@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+{% block page %}
+    <div class="row justify-content-center" id="registration-form">
+        <div class="col-sm-5">
+            <form action="{% url 'profiles:register' %}" method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="page-header">
+                    <h2>Sign Up</h2>
+                </div>
+
+                {% include 'form.html' %}
+                <button type="submit" class="btn btn-success">Create Account</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
