@@ -1,6 +1,6 @@
 {% autoescape off %}
-Hi {{ user.username }},
-Please click on the link to confirm your registration,
+Приветствую, {{ user }} !
+Пожалуйста, нажмите на линк ниже для завершения регистрации,
 
 http://{{ domain }}{% url 'profiles:confirm' uidb64=uid token=token %}
 {% endautoescape %}

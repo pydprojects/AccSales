@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  RabbitMQ:
+    hostname: rabbit
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"
+      - "5462:5462"
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+  PostgreSQL:
+    restart: always
+    image: sameersbn/postgresql:10-2
+    ports:
+      - "5432:5432"
+    environment:
+      - DEBUG=false
+
+      - DB_USER=admin
+      - DB_PASS=mypass
+      - DB_NAME=
+      - DB_TEMPLATE=
+
+      - DB_EXTENSION=
+
+      - REPLICATION_MODE=
+      - REPLICATION_USER=
+      - REPLICATION_PASS=
+      - REPLICATION_SSLMODE=
+    volumes:
+      - /srv/docker/postgresql:/var/lib/postgresql

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block page %}
-
     <div class="row justify-content-center" id="login-form">
         <div class="col-sm-4">
             <form action="{% url 'profiles:user_login' %}" method="post" novalidate>
@@ -10,13 +9,13 @@
                 {% endif %}
 
                 <div class="page-header">
-                    <h2>Sign In</h2>
+                    <h2>Вход</h2>
                 </div>
 
                 {% csrf_token %}
                 {% include 'form.html' %}
-                <button type="submit" class="btn btn-success">SignIn</button>
-                <a class="btn btn-secondary" href="{% url 'profiles:register' %}" role="button">Registration</a>
+                <button type="submit" class="btn btn-success">Войти</button>
+                <a class="btn btn-secondary" href="{% url 'profiles:register' %}" role="button">Регистрация</a>
             </form>
         </div>
     </div>

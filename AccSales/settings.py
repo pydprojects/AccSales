@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
+    'celery',
     'home.apps.HomeConfig',
     'profiles.apps.ProfilesConfig',
 ]
@@ -53,10 +55,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'AccSales.urls'
 
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,8 +80,12 @@ WSGI_APPLICATION = 'AccSales.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'admin',
+        'PASSWORD': 'mypass',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -120,3 +127,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Email settings
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'Pythonicalex@gmail.com'
+EMAIL_HOST_PASSWORD = 'pythonway'
+EMAIL_PORT = 587
+
+# Celery staff
+CELERY_BROKER_URL = 'amqp://admin:mypass@localhost'
+# Add timeout to all Celery tasks.
+CELERYD_TASK_SOFT_TIME_LIMIT = 60*30

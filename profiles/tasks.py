@@ -1,18 +1,22 @@
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
-import requests
 from celery import shared_task
+
+from .tokens import account_activation_token
 
 
 @shared_task
-def send_email(recipient_mail, text):
-    mail_subject = 'Account activation.'
+def send_email_activation(user, domain, email):
+    subject = 'Активация аккаунта.'
+    message = render_to_string('profiles/confirm_email.html', {
+        'user': user,
+        'domain': domain,
+        'uid': urlsafe_base64_encode(force_bytes(user)),
+        'token': account_activation_token.make_token(user),
+    })
     sender = getattr(settings, 'EMAIL_HOST_USER', None)
-    return requests.post(
-        "https://api.mailgun.net/v3/sandbox4dcc7b1a3b0e4018bde85dd3592b0dfa.mailgun.org/messages",
-        # Need API-Key from https://app.mailgun.com/app/account/security/api_keys
-        auth=("api", ""),
-        data={"from": f"TestTask robot <{sender}>",
-              "to": [recipient_mail],
-              "subject": mail_subject,
-              "text": text})
+    send_mail(subject, message, sender, recipient_list=[email])

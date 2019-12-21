@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block page %}
-    <h1>Account activation</h1>
-    <p>You need to activate your account. Activation link was sent to your email.</p>
-    <p>For resend confirmation email, click
-        <a href="{% url 'profiles:resend_confirmation' user_data.get_username %}">HERE</a>
+    <h1>Активация аккаунта</h1>
+    <p>Вам нужно активировать аккаунт. Линк активации был отправлен на Ваш email.</p>
+    <p>Что бы получить линк активации ещё раз, нажмите
+        <a href="{% url 'profiles:resend_confirmation' user.get_username %}">ЗДЕСЬ</a>
 {% endblock %}

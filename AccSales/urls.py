@@ -17,14 +17,14 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 
-from home.views import e_handler404, e_handler500, index
+from home.views import e_handler404, e_handler500
 
 handler404 = 'home.views.e_handler404'
 handler500 = 'home.views.e_handler500'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
+    path('', include('home.urls')),
     path('profile/', include('profiles.urls')),
 ]
 
