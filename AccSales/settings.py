@@ -27,6 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Setup environment variables
+POSTGRES_DATABASE = os.environ.get('DB_NAME', 'postgres')
+POSTGRES_USER = os.environ.get('DB_USER', 'admin')
+POSTGRES_PASSWORD = os.environ.get('DB_PASSWORD', 'mypass')
+POSTGRES_HOST = os.environ.get('DB_HOST', 'localhost')
+POSTGRES_PORT = os.environ.get('DB_PORT', '5432')
+
+EMAIL_USER = os.environ.get('EMAIL_USER', 'bucket0044@gmail.com')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', 'TestPassword')
 
 # Application definition
 
@@ -41,6 +50,7 @@ INSTALLED_APPS = [
     'celery',
     'home.apps.HomeConfig',
     'profiles.apps.ProfilesConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,11 +91,11 @@ WSGI_APPLICATION = 'AccSales.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'admin',
-        'PASSWORD': 'mypass',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': POSTGRES_DATABASE,
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': POSTGRES_HOST,
+        'PORT': POSTGRES_PORT
     }
 }
 
@@ -127,15 +137,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
 
 # Email settings
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'Pythonicalex@gmail.com'
-EMAIL_HOST_PASSWORD = 'pythonway'
+EMAIL_HOST_USER = EMAIL_USER
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
 EMAIL_PORT = 587
 
 # Celery staff
 CELERY_BROKER_URL = 'amqp://admin:mypass@localhost'
 # Add timeout to all Celery tasks.
 CELERYD_TASK_SOFT_TIME_LIMIT = 60*30
+
+# Path to custom csrf error template
+CSRF_FAILURE_VIEW = 'home.views.csrf_failure'

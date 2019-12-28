@@ -25,7 +25,7 @@ def user_login(request):
                 return render(request, 'profiles/login.html', {'form': form})
             if user_activated is not None:
                 login(request, user_activated)
-                return redirect(request.POST.get('next', 'home:index'))
+                return redirect(request.POST.get('next', 'home:index'))  # + or redirect('home:index')
             elif not user.is_active:
                 return render(request, 'profiles/unconfirmed.html', {'user': user})
     else:
@@ -61,7 +61,6 @@ def confirm(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(username=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        print(2)
         user = None
     if user is not None and account_activation_token.check_token(user.username, token):
         user.is_active = True
