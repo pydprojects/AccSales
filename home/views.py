@@ -2,11 +2,6 @@ from django.shortcuts import render
 from django.utils.translation import gettext as _
 
 
-def index(request):
-
-    return render(request, 'home/index.html')
-
-
 def e_handler404(request, exception):
     context = {'message': _("За вказаним посилання нічого не знайдено.")}
     response = render(request, 'home/404.html', context=context, status=404)

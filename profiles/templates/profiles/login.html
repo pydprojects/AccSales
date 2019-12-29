@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'home/base.html' %}
 
 {% block page %}
     <div class="row justify-content-center" id="login-form">
@@ -13,7 +13,7 @@
                 </div>
 
                 {% csrf_token %}
-                {% include 'form.html' %}
+                {% include 'home/form.html' %}
                 <button type="submit" class="btn btn-success">Войти</button>
                 <a class="btn btn-secondary" href="{% url 'profiles:register' %}" role="button">Регистрация</a>
             </form>

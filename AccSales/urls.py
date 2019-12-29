@@ -24,11 +24,11 @@ handler500 = 'home.views.e_handler500'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')),
+    path('', include('orders.urls')),
     path('profile/', include('profiles.urls')),
 ]
 
-# Added
-# if settings.DEBUG is True:
-#     from django.conf.urls.static import static
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Added to make possible load image in templates by image.url from ImageField
+if settings.DEBUG is True:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
