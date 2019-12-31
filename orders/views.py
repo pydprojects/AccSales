@@ -6,7 +6,7 @@ from .models import PSAccount
 
 def index(request):
     queryset = PSAccount.objects.order_by('-id')
-    paginator = Paginator(queryset, 16)  # Show number of lenses
+    paginator = Paginator(queryset, 10)  # Show orders number
     page = request.GET.get('page')
     try:
         orders = paginator.page(page)
