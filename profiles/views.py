@@ -25,7 +25,7 @@ def user_login(request):
                 return render(request, 'profiles/login.html', {'form': form})
             if user_activated is not None:
                 login(request, user_activated)
-                return redirect(request.POST.get('next', 'home:index'))  # + or redirect('home:index')
+                return redirect(request.POST.get('next', 'orders:index'))  # + or redirect('home:index')
             elif not user.is_active:
                 return render(request, 'profiles/unconfirmed.html', {'user': user})
     else:

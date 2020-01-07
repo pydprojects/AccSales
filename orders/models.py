@@ -12,22 +12,23 @@ def image_directory_path(instance, name):
 
 
 class PSAccount(BaseModel):
-    account_id = models.IntegerField(unique=True)
+    code = models.IntegerField(unique=True)
     email = models.EmailField(default=None, blank=True, null=True)
     owners = JSONField(default=None, blank=True, null=True)
     ex_owners = JSONField(default=None, blank=True, null=True)
+    status = models.CharField(max_length=16, default='OK')
 
     game = models.ForeignKey('Game', related_name='ps4accounts', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f'{self.account_id}'
+        return self.code
 
 
 class Game(BaseModel):
     name = models.CharField(max_length=64, unique=True)
     system = models.CharField(max_length=16)
     cost = models.IntegerField()
-    discount = models.IntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(95)])
+    discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(95)])
     space = models.FloatField()
     region = models.CharField(max_length=64)
     image = models.ImageField(upload_to=image_directory_path, blank=True)

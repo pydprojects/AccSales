@@ -1,6 +1,8 @@
 {% extends 'home/base.html' %}
 
-{% block page %}
+{% block title %}Вход.{% endblock %}
+
+{% block content %}
     <div class="row justify-content-center" id="login-form">
         <div class="col-sm-4">
             <form action="{% url 'profiles:user_login' %}" method="post" novalidate>

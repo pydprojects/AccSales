@@ -23,9 +23,10 @@ handler404 = 'home.views.e_handler404'
 handler500 = 'home.views.e_handler500'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('orders.urls')),
+    path('admin/', admin.site.urls),
     path('profile/', include('profiles.urls')),
+    path('messenger/', include('messenger.urls')),
 ]
 
 # Added to make possible load image in templates by image.url from ImageField

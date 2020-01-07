@@ -1,14 +1,15 @@
 {% extends 'home/base.html' %}
 
-{% block title %}Sign Up{% endblock %}
-{% block page %}
+{% block title %}Регистрация.{% endblock %}
+
+{% block content %}
     <div class="row justify-content-center" id="registration-form">
         <div class="col-sm-5">
             <form action="{% url 'profiles:register' %}" method="post" novalidate>
                 {% csrf_token %}
 
                 <div class="page-header">
-                    <h2>Sign Up</h2>
+                    <h2>Регистрация</h2>
                 </div>
 
                 {% include 'home/form.html' %}

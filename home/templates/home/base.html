@@ -42,13 +42,7 @@
         </div>
     </nav> <!-- End navbar -->
 
-    {% block content %}
-        <div class="container">
-        <!-- Content here -->
-            {% block page %}
-            {% endblock %}
-        </div> <!-- /.container -->
-    {% endblock content %}
+    <div class="container">{% block content %}<!-- Content here -->{% endblock content %}</div>
 
     {#  Messages  #}
     {% if messages %}
