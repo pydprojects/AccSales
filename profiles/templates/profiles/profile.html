@@ -34,6 +34,9 @@
                         <a class="btn btn-primary" href="{% url 'profiles:edit_profile' %}" role="button">{% trans "Редактирование профиля" %}</a>
                     {% endif %}
                 </li>
+                <li>
+                    <a class="btn btn-warning" href="{% url 'messenger:create_dialog' user_data.pk %}" role="button">{% trans "Личное сообщение" %}</a>
+                </li>
             </ul>
         </div>
     </div>

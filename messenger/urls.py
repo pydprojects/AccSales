@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 from . import views
@@ -21,7 +20,7 @@ from . import views
 app_name = 'messenger'
 
 urlpatterns = [
-    path('dialogs/', login_required(views.DialogsView.as_view()), name='dialogs'),
-    # path('dialogs/create/<int:user_id>/', 'login_required(views.CreateDialogView.as_view())', name='create_dialog'),
-    path('dialogs/<int:chat_id>/', login_required(views.MessagesView.as_view()), name='messages'),
+    path('dialogs/', views.DialogsView.as_view(), name='dialogs'),
+    path('dialogs/create/<int:user_id>/', views.CreateDialogView.as_view(), name='create_dialog'),
+    path('dialogs/<int:chat_id>/', views.MessagesView.as_view(), name='messages'),
 ]
