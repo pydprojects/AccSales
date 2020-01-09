@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Редактирование данных профиля"%}{% endblock %}
+
+{%  block content %}
+    <div class="row justify-content-center" id="registration-form">
+        <div class="col-sm-5">
+            <form action="{% url 'profiles:edit_profile' %}" method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="page-header">
+                    <h2>{% trans "Редактирование аккаунта."%}</h2>
+                </div>
+
+                {% include 'home/form.html' %}
+                <button type="submit" class="btn btn-success">{% trans "Применить"%}</button>
+                <a class="btn btn-secondary" href="{% url 'profiles:profile'  user.get_username %}" role="button">{% trans "Отмена" %}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

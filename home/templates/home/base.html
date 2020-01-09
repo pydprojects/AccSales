@@ -31,12 +31,13 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" style="text-decoration: none;">
                             <b class="nav-item caret">Profile</b>
                         </a>
-                        <ul class="nav-item dropdown-menu">
-                            <li><a class="nav-link" href="{% url 'profiles:user_logout' %}">Exit</a></li>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'profiles:profile' user.get_username %}">Личные данные</a></li>
+                            <li><a class="nav-link" href="{% url 'profiles:logout' %}">Выход</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'profiles:user_login' %}">LogIn</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profiles:login' %}">Вход</a></li>
                 {% endif %}
             </ul>
         </div>

@@ -20,9 +20,11 @@ from . import views
 
 app_name = 'profiles'
 urlpatterns = [
-    path('login/', views.user_login, name='user_login'),
-    path('logout/', views.user_logout, name='user_logout'),
-    path('register/', views.register, name='register'),
-    path('confirm/<slug:uidb64>/<slug:token>/', views.confirm, name='confirm'),
-    path('resend-confirmation/<str:username>/', views.resend_confirmation, name='resend_confirmation'),
+    path('login/', views.LogIn.as_view(), name='login'),
+    path('logout/', views.LogOut.as_view(), name='logout'),
+    path('register/', views.Register.as_view(), name='register'),
+    path('confirm/<slug:uidb64>/<slug:token>/', views.Confirm.as_view(), name='confirm'),
+    path('resend-confirmation/<str:username>/', views.ResendConfirmation.as_view(), name='resend_confirmation'),
+    path('self/<str:username>/', views.Profile.as_view(), name='profile'),
+    path('edit/', views.EditProfile.as_view(), name='edit_profile'),
 ]

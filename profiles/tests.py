@@ -143,7 +143,7 @@ class UserLogInViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(username='test', password='test1234')
-        cls.url = reverse('profiles:user_login')
+        cls.url = reverse('profiles:login')
 
     def setUp(self):
         self.response = self.client.get(self.url)
@@ -156,12 +156,12 @@ class UserLogInViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_url_accessible_by_name(self):
-        url = reverse('profiles:user_login')
+        url = reverse('profiles:login')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        url = reverse('profiles:user_login')
+        url = reverse('profiles:login')
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'profiles/login.html')
 
@@ -178,7 +178,7 @@ class UserLogInViewTests(TestCase):
         self.assertTrue(form.errors)
 
     def test_csrf(self):
-        url = reverse('profiles:user_login')
+        url = reverse('profiles:login')
         response = self.client.get(url)
         self.assertContains(response, 'csrfmiddlewaretoken')
 

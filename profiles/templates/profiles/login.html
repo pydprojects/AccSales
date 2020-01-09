@@ -5,7 +5,7 @@
 {% block content %}
     <div class="row justify-content-center" id="login-form">
         <div class="col-sm-4">
-            <form action="{% url 'profiles:user_login' %}" method="post" novalidate>
+            <form action="{% url 'profiles:login' %}" method="post" novalidate>
                 {% if request.GET.next %}
                     <input type="hidden" name="next" value="{{ request.GET.next }}" />
                 {% endif %}

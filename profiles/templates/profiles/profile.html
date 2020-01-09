@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+
+{#{% load gravatar %}#}
+{% load i18n %}
+
+{% block title %}{% trans "Данные профиля."%}{% endblock %}
+
+{% block content %}
+    <div class="row" id="user-detail">
+        <div class="col-sm-5" id="avatar">
+{#            {% gravatar user_data.email 250 %}#}
+        </div>
+        <div class="col-md-7">
+            <div id="profile-header">
+                <h2>{{ user_data.username }}</h2>
+            </div>
+            <ul id="user-detail-list">
+                {% if user_data.first_name or user_data.last_name %}
+                    <li>
+                        {{ user_data.get_full_name }}
+                    </li>
+                {% endif %}
+                <li>
+                    {{ user_data.email }}
+                </li>
+                <li>
+                    {% trans "Профиль зарегестрирован:" %} {{ user_data.date_joined }}
+                </li>
+                <li>
+                    {% trans "Дата последнего входа:" %} {{ user_data.last_login }}
+                </li>
+                <li>
+                    {% if user.is_authenticated and user.username == user_data.username %}
+                        <a class="btn btn-primary" href="{% url 'profiles:edit_profile' %}" role="button">{% trans "Редактирование профиля" %}</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

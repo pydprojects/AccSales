@@ -21,5 +21,5 @@ from . import views
 app_name = 'orders'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.Index.as_view(), name='index'),
 ]

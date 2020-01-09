@@ -20,6 +20,9 @@ class PSAccount(BaseModel):
 
     game = models.ForeignKey('Game', related_name='ps4accounts', null=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        ordering = ['-id']
+
     def __str__(self):
         return self.code
 

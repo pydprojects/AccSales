@@ -159,4 +159,4 @@ CELERYD_TASK_SOFT_TIME_LIMIT = 60*30
 CSRF_FAILURE_VIEW = 'home.views.csrf_failure'
 
 # Reverse to the page above when user is not authenticated
-LOGIN_URL = 'profiles:user_login'
+LOGIN_URL = 'profiles:login'
