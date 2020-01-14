@@ -5,7 +5,7 @@ from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import resolve, reverse
 
-from .form import LogInForm, CustomUserCreationForm
+from .forms import LogInForm, CustomUserCreationForm
 from .views import user_login, register
 
 

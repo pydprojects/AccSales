@@ -10,9 +10,10 @@ from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext as _
 from django.views.generic import View
 
-from .form import LogInForm, CustomUserCreationForm, CustomUserEditForm
+from .forms import LogInForm, CustomUserCreationForm, CustomUserEditForm
 from .tasks import send_email_activation
 from .tokens import account_activation_token
+from messenger.forms import DialogForm
 
 
 class LogIn(View):
@@ -24,7 +25,6 @@ class LogIn(View):
     def post(self, request):
         form = LogInForm(request.POST)
         if form.is_valid():
-            # user = User.objects.get(username=form.cleaned_data.get('username'))
             user_activated = authenticate(username=form.cleaned_data.get('username'),
                                           password=form.cleaned_data.get('password'))
             if user_activated is None:
@@ -101,10 +101,12 @@ class Profile(View):
         try:
             user_data = User.objects.get(username=username)
         except User.DoesNotExist:
-            messages.error(request, "Данного пользователя не существует.")
+            messages.error(request, _("Данного пользователя не существует."))
             return redirect('profiles:login')
         if user_data.is_active:
-            return render(request, 'profiles/profile.html', {'user_data': user_data})
+            # return form for modal message window
+            form = DialogForm()
+            return render(request, 'profiles/profile.html', {'user_data': user_data, 'form': form})
         elif not user_data.is_active:
             messages.error(request, _("Учетная запись не активирована!"))
             return redirect('profiles:login')

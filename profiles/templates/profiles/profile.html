@@ -35,9 +35,74 @@
                     {% endif %}
                 </li>
                 <li>
-                    <a class="btn btn-warning" href="{% url 'messenger:create_dialog' user_data.pk %}" role="button">{% trans "Личное сообщение" %}</a>
+                    <a class="btn btn-warning" data-toggle="modal" data-target="#NewDialogModal">{% trans "Личное сообщение" %}</a>
                 </li>
             </ul>
         </div>
     </div>
+    <!-- Modal create message form -->
+    <div class="modal fade" id="NewDialogModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document" aria-labelledby="NewDialogModalLabel" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{% trans "Новое сообщение" %}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="CreateDialogForm" action="{% url 'messenger:create_dialog' user_data.id %}" method="post" novalidate>
+                        {% csrf_token %}
+
+                        {% include 'home/form.html' %}
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Отмена" %}</button>
+                            <button type="submit" class="btn btn-primary">{% trans "Отправить" %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="NewDialogSuccessModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document" aria-labelledby="NewDialogSuccessModalLabel" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p>{% trans "Сообщение отправлено."%}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    $(document).on("submit", "#CreateDialogForm", function(event)
+    {
+        event.preventDefault();
+
+        var url=$(this).attr("action");
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "JSON",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function (data, status)
+            {
+                if(data.successful_submit){
+                    $('#NewDialogModal').modal('hide');
+                    $('#NewDialogSuccessModal').modal('show');
+                }
+            },
+            error: function (xhr, desc, err)
+            {
+                console.log("error");
+            }
+        });
+    });
 {% endblock %}
