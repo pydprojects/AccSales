@@ -53,7 +53,6 @@
                 <div class="modal-body">
                     <form id="CreateDialogForm" action="{% url 'messenger:create_dialog' user_data.id %}" method="post" novalidate>
                         {% csrf_token %}
-
                         {% include 'home/form.html' %}
 
                         <div class="modal-footer">
@@ -80,29 +79,35 @@
 {% endblock %}
 
 {% block javascript %}
-    $(document).on("submit", "#CreateDialogForm", function(event)
-    {
-        event.preventDefault();
+{# Submit new dialog modal form and catch status response #}
+    <script>
+        $(document).on('submit', '#CreateDialogForm', function(event)
+        {
+            event.preventDefault();
 
-        var url=$(this).attr("action");
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: "JSON",
-            data: new FormData(this),
-            processData: false,
-            contentType: false,
-            success: function (data, status)
-            {
-                if(data.successful_submit){
-                    $('#NewDialogModal').modal('hide');
-                    $('#NewDialogSuccessModal').modal('show');
-                }
-            },
-            error: function (xhr, desc, err)
-            {
-                console.log("error");
-            }
+            var url=$(this).attr('action');
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function (data, status)
+                {
+                    if(data.successful_submit){
+                        $('#NewDialogModal').modal('hide');
+                        $('#NewDialogSuccessModal').modal('show');
+                    }
+                },
+                {# TODO: Show field validation error in form #}
+                error: function (xhr, status, error)
+                {
+                    var response = xhr.responseText;
+                    var json = $.parseJSON(response);
+                    alert(json.form_errors.title)
+                    }
+            });
         });
-    });
+    </script>
 {% endblock %}

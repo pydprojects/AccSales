@@ -6,7 +6,7 @@ from home.models import BaseModel
 
 
 class Dialog(BaseModel):
-    name = models.CharField(_('Тема'), max_length=64, unique=True)
+    title = models.CharField(_('Тема'), max_length=64, unique=True)
     members = models.ManyToManyField(User, verbose_name=_("Участник"))
 
     def get_absolute_url(self):

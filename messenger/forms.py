@@ -7,7 +7,7 @@ from .models import Dialog, Message
 
 
 class DialogForm(forms.Form):
-    name = forms.CharField(label="Тема:", max_length=64)
+    title = forms.CharField(label="Тема:", max_length=64)
     message = forms.CharField(widget=forms.Textarea)
 
     def __init__(self, *args, **kwargs):
@@ -15,18 +15,18 @@ class DialogForm(forms.Form):
         self.user_to = kwargs.pop('user_to', None)
         super(DialogForm, self).__init__(*args, **kwargs)
 
-    def clean_name(self):
-        name = self.cleaned_data['name'].lower()
-        dialog = Dialog.objects.filter(name=name)
+    def clean_title(self):
+        title = self.cleaned_data['title'].lower()
+        dialog = Dialog.objects.filter(title=title)
         if dialog.count():
-            raise ValidationError(_("Диалог с таким названием уже существует."), code='invalid')
-        return dialog
+            raise ValidationError("Диалог с таким названием уже существует.", code='invalid')
+        return title
 
     def save(self, commit=True):
-        name = self.cleaned_data['name'].lower()
+        title = self.cleaned_data['title'].lower()
         message = self.cleaned_data['message']
         members = (self.user_from, self.user_to)
-        dialog = Dialog.objects.create(name=name)
+        dialog = Dialog.objects.create(title=title)
         dialog.members.add(*members)
         Message.objects.create(dialog_id=dialog.id, author_id=members[0], message=message)
 

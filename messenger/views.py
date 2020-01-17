@@ -47,13 +47,11 @@ class MessagesView(View):
 
 class CreateDialogView(View):
 
-    # @method_decorator(login_required)
-    # def get(self, request, user_id):
-    #     form = DialogForm(user_from=request.user.id, user_to=user_id)
-    #     return render(request, 'messenger/new_dialog.html', {'form': form})
-
     @method_decorator(login_required)
-    def post(self, request, user_id=None):
-        form = DialogForm(data=request.POST)
+    def post(self, request, user_id):
+        form = DialogForm(data=request.POST, user_from=request.user.id, user_to=user_id)
         if form.is_valid():
+            form.save()
             return JsonResponse({'successful_submit': True})
+        else:
+            return JsonResponse({'form_errors': form.errors}, status=422)
