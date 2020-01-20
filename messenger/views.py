@@ -12,37 +12,8 @@ class DialogsView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        chats = Dialog.objects.filter(members__in=[request.user.id])
-        return render(request, 'messenger/dialogs.html', {'user_profile': request.user, 'chats': chats})
-
-
-class MessagesView(View):
-
-    @method_decorator(login_required)
-    def get(self, request, chat_id):
-        try:
-            chat = Dialog.objects.get(id=chat_id)
-            if request.user in chat.members.all():
-                chat.message_set.filter(is_read=False).exclude(author=request.user).update(is_read=True)
-            else:
-                chat = None
-        except Dialog.DoesNotExist:
-            chat = None
-
-        return render(request, 'messenger/messages.html', {'user_profile': request.user,
-                                                           'chat': chat,
-                                                           'form': MessageForm()
-                                                           })
-
-    @method_decorator(login_required)
-    def post(self, request, chat_id):
-        form = MessageForm(data=request.POST)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.chat_id = chat_id
-            message.author = request.user
-            message.save()
-        return redirect(reverse('messenger:messages', kwargs={'chat_id': chat_id}))
+        dialogs = Dialog.objects.filter(members__in=[request.user.id])
+        return render(request, 'messenger/dialogs.html', {'user_profile': request.user, 'dialogs': dialogs})
 
 
 class CreateDialogView(View):
@@ -55,3 +26,32 @@ class CreateDialogView(View):
             return JsonResponse({'successful_submit': True})
         else:
             return JsonResponse({'form_errors': form.errors}, status=422)
+
+
+class MessagesView(View):
+
+    @method_decorator(login_required)
+    def get(self, request, dialog_id):
+        try:
+            dialog = Dialog.objects.get(id=dialog_id)
+            if request.user in dialog.members.all():
+                dialog.message_set.filter(is_read=False).exclude(author=request.user).update(is_read=True)
+            else:
+                dialog = None
+        except Dialog.DoesNotExist:
+            dialog = None
+
+        return render(request, 'messenger/messages.html', {'user_profile': request.user,
+                                                           'dialog': dialog,
+                                                           'form': MessageForm()
+                                                           })
+
+    @method_decorator(login_required)
+    def post(self, request, dialog_id):
+        form = MessageForm(data=request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.dialog_id = dialog_id
+            message.author = request.user
+            message.save()
+        return redirect(reverse('messenger:messages', kwargs={'dialog_id': dialog_id}))

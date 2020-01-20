@@ -17,11 +17,11 @@ class Dialog(BaseModel):
 class Message(BaseModel):
     dialog = models.ForeignKey(Dialog, verbose_name=_("Диалог"), on_delete=models.CASCADE)
     author = models.ForeignKey(User, verbose_name=_("Пользователь"), on_delete=models.CASCADE)
-    message = models.TextField(_("Сообщение"))
+    text = models.TextField(_("Сообщение"))
     is_read = models.BooleanField(_('Прочитано'), default=False)
 
     class Meta:
         ordering = ['created']
 
     def __str__(self):
-        return self.message
+        return self.text

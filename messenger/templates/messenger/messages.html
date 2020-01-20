@@ -7,33 +7,51 @@
 {% block title %}Сообщения.{% endblock %}
 
 {% block content %}
-    {% if not chat %}
-        <div class="panel panel-body">
-            {% trans "Невозможно начать беседу. Не найден пользователь или вы не имеете доступа к данной беседе." %}
-        </div>
-    {% else %}
-        {% if chat %}
-            <div id="messages" class="panel">
-                <div id="innerMessages">
-                    {% for message in chat.message_set.all %}
-                        {% include 'messenger/message.html' with message_item=message %}
-                    {% endfor %}
+        {% if dialog %}
+            {% for message in dialog.message_set.all %}
+                {% with first_message=dialog.message_set.first %}
+                <div id="{{ message.pk }}" class="card {% if forloop.last %}mb-4{% else %}mb-2{% endif %} {% if message.pk == first_message.pk %}border-primary{% endif %}">
+                    {% if message.pk == first_message.pk %}
+                        <div class="card-header text-white bg-primary py-2 px-3">{{ dialog.title }}</div>
+                    {% endif %}
+                    <div class="card-body p-3">
+                        <div class="row">
+{#                            <div class="col-2">#}
+{#                                {% gravatar  post.created_by.email 100 %}<br>#}
+{#                            </div>#}
+                            <div class="col-10">
+                                <div class="row mb-3">
+                                    <div class="col-9">
+                                        <p>{{ message.text }}</p>
+                                    </div>
+{#                                    <div class="col-3 text-right">#}
+{#                                        <small class="text-muted">{{ post.created_at|naturaltime }}</small>#}
+{#                                    </div>#}
+                                </div>
+{#                                {{ post.get_message_as_markdown }}#}
+{#                                {% if user.is_authenticated %}#}
+{#                                    <div class="mt-3">#}
+{#                                        <a href="{% url 'blog:edit_post' post.topic.category.pk post.topic.pk post.pk %}"#}
+{#                                                   class="btn btn-warning btn-sm" role="button">Edit</a>#}
+{#                                        <a href="{% url 'blog:delete_post' post.topic.category.pk post.topic.pk post.pk %}"#}
+{#                                                   class="btn btn-danger btn-sm" role="button">DELETE</a>#}
+{#                                    </div>#}
+{#                                {% endif %}#}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                {% endwith %}
+            {% endfor %}
         {% endif %}
         <div class="row justify-content-center" id="message-form">
             <div class="col-sm-5">
-                <form action="{% url 'messenger:messages' chat.pk %}" method="post" novalidate>
+                <form action="{% url 'messenger:messages' dialog.pk %}" method="post" novalidate>
                     {% csrf_token %}
-
-                    <div class="page-header">
-                        <h2>Messages</h2>
-                    </div>
 
                     {% include 'home/form.html' %}
                     <button type="submit" class="btn btn-success">{% trans "Отправить" %}</button>
                 </form>
             </div>
         </div>
-    {% endif %}
 {% endblock %}
