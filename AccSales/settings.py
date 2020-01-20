@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'celery',
+    'django_gravatar',
     'home.apps.HomeConfig',
     'profiles.apps.ProfilesConfig',
     'orders.apps.OrdersConfig',
@@ -160,3 +161,6 @@ CSRF_FAILURE_VIEW = 'home.views.csrf_failure'
 
 # Reverse to the page above when user is not authenticated
 LOGIN_URL = 'profiles:login'
+
+# Type of gravatar image
+GRAVATAR_DEFAULT_IMAGE = 'identicon'

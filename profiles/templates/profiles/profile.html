@@ -1,14 +1,14 @@
 {% extends 'home/base.html' %}
 
-{#{% load gravatar %}#}
 {% load i18n %}
+{% load gravatar %}
 
 {% block title %}{% trans "Данные профиля."%}{% endblock %}
 
 {% block content %}
     <div class="row" id="user-detail">
         <div class="col-sm-5" id="avatar">
-{#            {% gravatar user_data.email 250 %}#}
+            {% gravatar user_data.email 250 %}
         </div>
         <div class="col-md-7">
             <div id="profile-header">
