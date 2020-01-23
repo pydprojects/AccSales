@@ -5,8 +5,8 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_companion(user, chat):
-    for u in chat.members.all():
+def get_companion(user, dialog):
+    for u in dialog.members.all():
         if u != user:
             return u
     return None

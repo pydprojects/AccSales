@@ -13,7 +13,7 @@ class DialogsView(View):
     @method_decorator(login_required)
     def get(self, request):
         dialogs = Dialog.objects.filter(members__in=[request.user.id])
-        return render(request, 'messenger/dialogs.html', {'user_profile': request.user, 'dialogs': dialogs})
+        return render(request, 'messenger/dialogs.html', {'dialogs': dialogs})
 
 
 class CreateDialogView(View):

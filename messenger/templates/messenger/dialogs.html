@@ -1,8 +1,9 @@
 {% extends 'home/base.html' %}
 
-{% load messenger_extras %}
 {% load tz %}
 {% load i18n %}
+{% load humanize %}
+{% load messenger_extras %}
 
 {% block title %}{% trans "Диалоги." %}{% endblock %}
 
@@ -14,7 +15,7 @@
             <h3>{% trans "Нет ни одного начатого диалога." %}</h3>
             {% else %}
                 <table class="table">
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">{% trans "Тема" %}</th>
@@ -39,8 +40,10 @@
                                                     {% endif %}
                                                 </a>
                                             </td>
-                                            <td>{{ companion.username }}</td>
-                                            <td>Last message date</td>
+                                            <td>
+                                                <a href="{% url 'profiles:profile' last_message.author.username %}">{{ last_message.author }}</a>
+                                            </td>
+                                            <td>{{ last_message.created|naturaltime }}</td>
                                         </tr>
                                         </tbody>
                             {% endwith %}

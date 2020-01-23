@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,20 +30,24 @@
             <ul class="nav justify-content ml-auto">
                 {% if user.is_authenticated %}
                     <a href="{% url 'messenger:dialogs' %}">
-                        <svg width="50" height="50" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
-                            <path d="M24 21h-24v-18h24v18zm-23-16.477v15.477h22v-15.477l-10.999 10-11.001-10zm21.089-.523h-20.176l10.088 9.171 10.088-9.171z"/></svg>
+{#                        <svg width="50" height="50" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">#}
+{#                            <path d="M24 21h-24v-18h24v18zm-23-16.477v15.477h22v-15.477l-10.999 10-11.001-10zm21.089-.523h-20.176l10.088 9.171 10.088-9.171z"/></svg>#}
+                        <button type="button" class="btn btn-primary">
+                            {% trans "Сообщения" %} <span class="badge badge-light">{{unread_messages_count}}</span>
+                            <span class="sr-only">unread messages</span>
+                        </button>
                     </a>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" style="text-decoration: none;">
-                            <b class="nav-item caret">Profile</b>
+                            <b class="nav-item caret">{{ user.username }}</b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'profiles:profile' user.get_username %}">Личные данные</a></li>
-                            <li><a class="nav-link" href="{% url 'profiles:logout' %}">Выход</a></li>
+                            <li><a href="{% url 'profiles:profile' user.get_username %}">{% trans "Личные данные" %}</a></li>
+                            <li><a class="nav-link" href="{% url 'profiles:logout' %}">{% trans "Выход" %}</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'profiles:login' %}">Вход</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profiles:login' %}">{% trans "Вход" %}</a></li>
                 {% endif %}
             </ul>
         </div>
