@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %}
+{% extends 'base/base.html' %}
 
 {% load i18n %}
 {% load gravatar %}
@@ -31,7 +31,7 @@
                 </li>
                 <li>
                     {% if user.is_authenticated and user.username == user_data.username %}
-                        <a class="btn btn-primary" href="{% url 'profiles:edit_profile' %}" role="button">{% trans "Редактирование профиля" %}</a>
+                        <a class="btn btn-primary" href="{% url 'profiles:profile-edit' %}" role="button">{% trans "Редактирование профиля" %}</a>
                     {% endif %}
                 </li>
                 <li>

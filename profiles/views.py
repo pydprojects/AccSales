@@ -35,6 +35,8 @@ class LogIn(View):
                 return redirect(request.POST.get('next', 'orders:index'))  # + or redirect('orders:index')
             elif not user_activated.is_active:
                 return render(request, 'profiles/unconfirmed.html', {'user': user_activated})
+        else:
+            return render(request, 'profiles/login.html', {'form': form})
 
 
 class LogOut(View):
@@ -61,6 +63,8 @@ class Register(View):
             recipient_mail = form.cleaned_data.get('email')
             send_email_activation.delay(user.username, domain, recipient_mail)
             return render(request, 'profiles/unconfirmed.html', {'user': user})
+        else:
+            return render(request, 'profiles/register.html', {'form': form})
 
 
 class Confirm(View):
@@ -112,7 +116,7 @@ class Profile(View):
             return redirect('profiles:login')
 
 
-class EditProfile(View):
+class ProfileEdit(View):
 
     @method_decorator(login_required)
     def get(self, request):
@@ -125,3 +129,5 @@ class EditProfile(View):
         if form.is_valid():
             form.save()
             return redirect(reverse('profiles:profile', kwargs={'username': request.user}))
+        else:
+            return render(request, 'profiles/edit_profile.html', {'form': form})

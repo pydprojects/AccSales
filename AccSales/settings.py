@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'celery',
     'django_gravatar',
-    'home.apps.HomeConfig',
+    'base.apps.HomeConfig',
     'profiles.apps.ProfilesConfig',
     'orders.apps.OrdersConfig',
     'messenger.apps.MessengerConfig',
@@ -176,7 +176,7 @@ CELERY_BROKER_URL = 'amqp://admin:mypass@localhost'
 CELERYD_TASK_SOFT_TIME_LIMIT = 60*30
 
 # Path to custom csrf error template
-CSRF_FAILURE_VIEW = 'home.views.csrf_failure'
+CSRF_FAILURE_VIEW = 'base.views.csrf_failure'
 
 # Reverse to the page above when user is not authenticated
 LOGIN_URL = 'profiles:login'

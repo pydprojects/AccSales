@@ -1,8 +1,8 @@
-{% extends 'home/base.html' %}
+{% extends 'base/base.html' %}
 
 {% block content %}
     <h1>Активация аккаунта</h1>
     <p>Вам нужно активировать аккаунт. Линк активации был отправлен на Ваш email.</p>
     <p>Что бы получить линк активации ещё раз, нажмите
-        <a href="{% url 'profiles:resend_confirmation' user.get_username %}">ЗДЕСЬ</a>
+        <a href="{% url 'resend-confirmation' user.get_username %}">ЗДЕСЬ</a>
 {% endblock %}

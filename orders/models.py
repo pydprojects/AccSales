@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from AccSales.tools import image_compressor
-from home.models import BaseModel
+from base.models import BaseModel
 
 
 def image_directory_path(instance, name):

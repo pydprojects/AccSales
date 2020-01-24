@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %}
+{% extends 'base/base.html' %}
 
 {% block title %}Вход.{% endblock %}
 
@@ -15,7 +15,7 @@
                 </div>
 
                 {% csrf_token %}
-                {% include 'home/form.html' %}
+                {% include 'base/form.html' %}
                 <button type="submit" class="btn btn-success">Войти</button>
                 <a class="btn btn-secondary" href="{% url 'profiles:register' %}" role="button">Регистрация</a>
             </form>

@@ -26,9 +26,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="CreateDialogForm" action="{% url 'messenger:create_dialog' user_data.id %}" method="post" novalidate>
+                <form id="CreateDialogForm" action="{% url 'messenger:dialog-create' user_data.id %}" method="post" novalidate>
                     {% csrf_token %}
-                    {% include 'home/form.html' %}
+                    {% include 'base/form.html' %}
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Отмена" %}</button>

@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from home.models import BaseModel
+from base.models import BaseModel
 
 
 class DialogManager(models.Manager):
@@ -29,7 +30,6 @@ class Dialog(BaseModel):
         ordering = ['-updated']
 
     def get_absolute_url(self):
-        from django.urls import reverse
         return reverse('messenger:messages', args=[str(self.id)])
 
 
@@ -44,3 +44,6 @@ class Message(BaseModel):
 
     def __str__(self):
         return self.text
+
+    def get_absolute_url(self):
+        return reverse('messenger:messages', args=[str(self.id)])

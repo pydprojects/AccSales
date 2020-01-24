@@ -2,10 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
-from django.views.generic import View
+from django.views.generic import View, UpdateView
 
 from .forms import MessageForm, DialogForm
-from .models import Dialog
+from .models import Dialog, Message
 
 
 class DialogsView(View):
@@ -16,7 +16,7 @@ class DialogsView(View):
         return render(request, 'messenger/dialogs.html', {'dialogs': dialogs})
 
 
-class CreateDialogView(View):
+class DialogCreateView(View):
 
     @method_decorator(login_required)
     def post(self, request, user_id):
@@ -55,3 +55,19 @@ class MessagesView(View):
             message.author = request.user
             message.save()
         return redirect(reverse('messenger:messages', kwargs={'dialog_id': dialog_id}))
+
+
+class MessageUpdate(UpdateView):
+    model = Message
+    fields = ['text']
+    pk_url_kwarg = 'message_id'
+    template_name = 'messenger/edit_message.html'
+    context_object_name = 'dialog'
+
+    """ We can do not use 'success_url' variable and 'form_valid' method. Instead of that CreateView and UpdateView
+    use 'get_absolute_url' method from model object (if exist).
+    """
+
+    # def form_valid(self, form):
+    #     message = form.save()
+    #     return redirect('messenger:messages', dialog_id=message.dialog_id)
